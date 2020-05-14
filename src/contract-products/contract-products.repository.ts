@@ -26,7 +26,7 @@ export class CPRepository extends Repository<ContractProduct> {
           ...cp.child
         }
       });
-
+  
     //collect all childs
     const _childs = results
       .filter(x => x.parent)
@@ -73,8 +73,8 @@ export class CPRepository extends Repository<ContractProduct> {
       .map((cp: any) => {
         return _.pickBy({
           id: cp._id,
-          parent: cp.id !== parent && parent.id ? parent : null,
-          child: cp,
+          parent: parent && cp.id !== parent.id ? parent : null,
+          child: cp, 
           contract
         }, _.identity)
       })
@@ -91,7 +91,8 @@ export class CPRepository extends Repository<ContractProduct> {
         if (cp.child && !cp.child.id) {
           cp.child = await pr.save(cp.child);
         }
-        /* save to contract products */
+
+        /* if the product has an id then update to contract products */
         results.push(await this.save(cp));
         count++;
 
@@ -103,11 +104,13 @@ export class CPRepository extends Repository<ContractProduct> {
 
     /* get the parent */
     let _parent: Product = results
-      .map(r => r.parent).filter(Boolean)[0];
+      .map(r => r.parent ? r.parent : r.child).filter(Boolean)[0];
 
     /* collect all the childrens */
     let sub_products: Product[] = results
-      .filter(sp => sp.child.id !== _parent.id)
+      .filter(sp => {
+        return sp.parent ? (sp.child.id !== _parent.id ? sp.child : sp ) : null;
+      })
       .map(c => c.child);
 
     /* build dto response */

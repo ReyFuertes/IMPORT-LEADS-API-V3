@@ -20,7 +20,7 @@ export class ContractCategoryRepository extends Repository<ContractCategory> {
       id,
       term: t_result
     }
-    console.log(payload);
+
     /* insert to contract category */
     const cc_result = await this.save(payload);
 
@@ -43,13 +43,13 @@ export class ContractCategoryRepository extends Repository<ContractCategory> {
       .leftJoinAndSelect('contract_category.terms', 'contract_term')
       .where('contract_category.contract_id = :id', { id })
       .getMany();
-    console.log(results);
+
     /* get term by category ids */
-    const categoryIds = results && results.map(c => c && c.terms.map(t => t && t.id)).shift();
-    if (!categoryIds) {
-      return [];
+    const termIds = results && results.map(c => c && c.terms.map(t => t && t.id)).shift();
+    let terms_with_tags: string[] = [];
+    if (termIds && termIds.length > 0) {
+      terms_with_tags = await this.getTermById(termIds);
     }
-    let terms_with_tags = await this.getTermById(categoryIds);
   
     /* construct terms with tags */
     let newResults: any[];
@@ -83,6 +83,7 @@ export class ContractCategoryRepository extends Repository<ContractCategory> {
       .leftJoinAndSelect('contract_term.contract_tag', 'tag')
       .where('contract_term.id IN (:...ids)', { ids })
       .getMany();
+
     return contract_terms
   }
 

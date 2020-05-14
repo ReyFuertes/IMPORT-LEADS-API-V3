@@ -5,25 +5,25 @@ import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query,
 
 @Controller('products')
 export class ProductsController {
-  constructor(private contractsService: ProductsService) { }
+  constructor(private srv: ProductsService) { }
 
   @Patch()
   update(@Body() dto: ReqProdDto): Promise<ResProdDto> {
-    return this.contractsService.updateProduct(dto);
+    return this.srv.updateProduct(dto);
   }
 
   @Delete('/:id')
   delete(@Param('id') id: string): Promise<ResProdDto> {
-    return this.contractsService.deleteById(id);
+    return this.srv.deleteById(id);
   }
 
   @Get()
   getAll(@Query() dto: GetProductsDto ): Promise<ResProdDto[]> {
-    return this.contractsService.getAllProducts(dto);
+    return this.srv.getAllProducts(dto);
   }
 
   @Post()
   create(@Body() dto: ReqProdDto): Promise<ResProdDto> {
-    return this.contractsService.createProduct(dto);
+    return this.srv.createProduct(dto);
   }
 }

@@ -45,10 +45,10 @@ export class Contract extends BaseEntity {
   @JoinColumn({ name: 'venue_id' })
   public venue: Venue;
 
-  @OneToMany(() => Image, image => image.contract, {  cascade: true, eager: true })
+  @OneToMany(() => Image, image => image.contract, { cascade: true, eager: true })
   images: Image[];
 
-  @OneToMany(() => ContractProduct, v => v.contract)
+  @OneToMany(() => ContractProduct, v => v.contract, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   contract_products: ContractProduct;
 
   @ManyToOne(() => User, v => v.contract)

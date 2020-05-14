@@ -6,7 +6,7 @@ import {
 } from "typeorm";
 import { Category } from "src/category/category.entity";
 
-@Entity()
+@Entity({ synchronize: true })
 export class ContractCategory extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
@@ -20,7 +20,7 @@ export class ContractCategory extends BaseEntity {
   @JoinColumn({ name: 'contract_id' })
   contract: Contract;
 
-  @OneToMany(() => ContractTerm, t => t.contract_category)
+  @OneToMany(() => ContractTerm, t => t.contract_category, { onDelete: 'CASCADE' })
   terms: ContractTerm[];
 
   @CreateDateColumn()

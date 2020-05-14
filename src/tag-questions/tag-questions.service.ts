@@ -11,6 +11,14 @@ export class TagQuestionsService extends BaseService<TagQuestion> {
     super(repo);
   }
 
+  async deleteById(id: string): Promise<TagQuestion> {
+    return this.repo.deleteQuestion(id);
+  }
+
+  async createTagQuestion(dto: TagQuestion): Promise<TagQuestion> {
+    return this.repo.saveTagQuestion(dto);
+  }
+
   async getQuestionByTagId(id: string): Promise<ResTagDto> {
     return this.repo.getQuestionByTagId(id);
   }

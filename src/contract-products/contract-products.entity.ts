@@ -8,15 +8,15 @@ export class ContractProduct extends BaseEntity {
   @Generated('uuid')
   id: string;
 
-  @ManyToOne(() => Product, p => p.contract_parent, { nullable: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => Product, p => p.contract_parent, { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'parent_id' })
   parent: Product;
 
-  @ManyToOne(() => Product, p => p.contract_child, { nullable: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => Product, p => p.contract_child, { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'child_id' })
   child: Product;
 
-  @ManyToOne(() => Contract, c => c.contract_products, { nullable: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => Contract, c => c.contract_products, { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contract_id' })
   contract: Contract;
 

@@ -25,14 +25,14 @@ export class Product extends BaseEntity {
   @UpdateDateColumn({ type: "timestamp" })
   updated_at: number;
 
-  @ManyToOne(() => Product, p => p.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Product, p => p.id, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'parent_id' })
   parent: Product;
 
-  @OneToMany(() => ContractProduct, cp => cp.parent)
+  @OneToMany(() => ContractProduct, cp => cp.parent, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   contract_parent: ContractProduct;
 
-  @OneToMany(() => ContractProduct, cp => cp.child)
+  @OneToMany(() => ContractProduct, cp => cp.child, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   contract_child: ContractProduct;
 }
 

@@ -11,7 +11,19 @@ export class TagsService extends BaseService<Tag> {
     super(repo);
   }
 
-  async getTags(): Promise<ResTagDto> {
+  async updateTag(dto: Tag): Promise<Tag> {
+    return this.repo.saveTag(dto);
+  }
+
+  async deleteById(id: string): Promise<Tag> {
+    return this.repo.deleteTag(id);
+  }
+
+  async createTag(dto: Tag): Promise<Tag> {
+    return this.repo.saveTag(dto);
+  }
+
+  async getTags(): Promise<Tag[]> {
     return this.repo.getTags();
   }
 }
