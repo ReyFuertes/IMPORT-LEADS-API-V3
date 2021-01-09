@@ -2,7 +2,7 @@ import { sqlOp } from './../models/generic.model';
 import { ResTagDto, TagGetDto } from './tags.dto';
 import { Tag } from './tags.entity';
 import { Repository, EntityRepository } from 'typeorm';
-import _ = require("lodash");
+import * as _ from 'lodash';
 
 @EntityRepository(Tag)
 export class TagRepository extends Repository<Tag> {

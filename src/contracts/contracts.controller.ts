@@ -6,31 +6,31 @@ import { ReqCDto, GCDto, ResCDto } from './contracts.dto';
 
 @Controller('contracts')
 export class ContractsController {
-  constructor(private contractsService: ContractsService) { }
+  constructor(private srv: ContractsService) { }
 
   @Get()
   getAll(@Query() getAllDto: GCDto ): Promise<ResCDto> {
-    return this.contractsService.getContracts(getAllDto);
+    return this.srv.getContracts(getAllDto);
   }
 
   @Post()
   create(@Body() createDto: ReqCDto): Promise<Contract> {
-    return this.contractsService.createContract(createDto);
+    return this.srv.createContract(createDto);
   }
 
   @Get('/:id')
   getById(@Param('id') id: string): Promise<Contract> {
-    return this.contractsService.getById(id);
+    return this.srv.getById(id);
   }
 
   @Patch()
   update(@Body() updateDto: Contract): Promise<Contract> {
-    return this.contractsService.updateContract(updateDto);
+    return this.srv.updateContract(updateDto);
   }
 
   @Delete('/:id')
-  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.contractsService.deleteById(id);
+  delete(@Param('id') id: string): Promise<Contract> {
+    return this.srv.deleteById(id);
   }
   
   @Get('image/:filename')

@@ -5,5 +5,6 @@ export class ContractTermDto {
   term_name: string;
   term_description?: string;
   contract_category: ContractCategory;
-  tag?: Tag
+  tag?: Tag;
+  contract_id?: string;
 }

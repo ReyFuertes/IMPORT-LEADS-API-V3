@@ -6,10 +6,8 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([UploadRepository])
-  ],
-  controllers: [UploadController], //
-  providers: [UploadService] //
+  imports: [TypeOrmModule.forFeature([UploadRepository])],
+  controllers: [UploadController],
+  providers: [UploadService]
 })
 export class UploadModule { }

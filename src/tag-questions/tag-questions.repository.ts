@@ -1,7 +1,7 @@
 import { ResTagDto } from './tag-questions.dto';
 import { TagQuestion } from './tag-questions.entity';
 import { Repository, EntityRepository } from 'typeorm';
-import _ = require("lodash");
+import * as _ from 'lodash';
 
 @EntityRepository(TagQuestion)
 export class TagQuestionRepository extends Repository<TagQuestion> {

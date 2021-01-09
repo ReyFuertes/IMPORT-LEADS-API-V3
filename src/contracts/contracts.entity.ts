@@ -1,11 +1,14 @@
 import { ContractProduct } from './../contract-products/contract-products.entity';
-import { Product } from './../products/products.entity';
 import { Venue } from 'src/venues/venues.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Generated, OneToOne, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
 import { Image } from 'src/images/image.entity';
-import { User } from 'src/users/user.entity';
+import { SavedChecklist } from 'src/saved-checklist/saved-checklist.entity';
+import { User } from 'src/user/user.entity';
+import { ContractCategory } from 'src/contract-category/contract-category.entity';
+import { ContractTemplate } from 'src/contract-template/contract-template.entity';
+import { CategoryTemplate } from 'src/category-template/category-template.entity';
 
-@Entity()
+@Entity({ synchronize: false })
 export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
@@ -14,10 +17,10 @@ export class Contract extends BaseEntity {
   @Column({ nullable: true })
   contract_name: string;
 
-  @Column('timestamp', { nullable: true })
+  @Column({ nullable: true })
   start_date: Date;
 
-  @Column('timestamp', { nullable: true })
+  @Column({ nullable: true })
   delivery_date: Date;
 
   @Column({ nullable: true })
@@ -35,23 +38,37 @@ export class Contract extends BaseEntity {
   @Column({ nullable: true })
   upload_date: Date;
 
+  @Column({ nullable: true })
+  venue_id: string;
+
   @CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn({ type: "timestamp" })
-  updated_at: number;
+  @OneToMany(() => CategoryTemplate, v => v.contract,
+    { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  category_template: CategoryTemplate;
 
-  @ManyToOne(() => Venue, v => v.contract)
+  @OneToMany(() => ContractTemplate, v => v.contract,
+    { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  contract_template: ContractTemplate;
+
+  @ManyToOne(() => Venue, v => v.contract, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'venue_id' })
-  public venue: Venue;
+  venue: Venue;
 
-  @OneToMany(() => Image, image => image.contract, { cascade: true, eager: true })
+  @ManyToOne(() => ContractCategory, { onDelete: 'CASCADE' })
+  contract_category: ContractCategory;
+
+  @OneToMany(() => Image, i => i.contract, { onDelete: 'CASCADE' })
   images: Image[];
 
   @OneToMany(() => ContractProduct, v => v.contract, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   contract_products: ContractProduct;
 
-  @ManyToOne(() => User, v => v.contract)
+  @OneToMany(() => SavedChecklist, v => v.checklist_contract)
+  saved_checklist: SavedChecklist;
+
+  @ManyToOne(() => User, v => v.contract, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

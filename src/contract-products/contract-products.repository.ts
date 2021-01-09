@@ -1,14 +1,14 @@
 import { Product } from './../products/products.entity';
-import { ReqCPDto, ResCPDto, SingleCPDto } from './contract-product.dto';
+import { ReqCPDto, ContractProductResponseDto, SingleCPDto } from './contract-product.dto';
 import { ProductsRepository } from './../products/products.repository';
 import { ContractProduct } from './contract-products.entity';
 import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 @EntityRepository(ContractProduct)
-export class CPRepository extends Repository<ContractProduct> {
+export class ContractProductRepository extends Repository<ContractProduct> {
 
-  async getByContractId(id: string): Promise<ResCPDto[]> {
+  async getByContractId(id: string): Promise<ContractProductResponseDto[]> {
     const query = this.createQueryBuilder('contract_product');
     const results = await query
       .leftJoinAndSelect("contract_product.parent", "products.parent")
@@ -16,37 +16,40 @@ export class CPRepository extends Repository<ContractProduct> {
       .where("contract_product.contract_id = :id", { id })
       .getMany();
 
-    const ret: ResCPDto[] = [];
-    //collect all parents
-    const _parents = results
-      .filter(x => !x.parent)
+    const ret: ContractProductResponseDto[] = [];
+    /* collect all parents */
+    let parent = results.filter(x => !x.parent)
       .map(cp => {
         return {
           _id: cp.id,
-          ...cp.child
+          ...cp.child,
+          qty: cp.qty,
+          cost: cp.cost
         }
       });
-  
-    //collect all childs
-    const _childs = results
-      .filter(x => x.parent)
+
+    /* collect all childs */
+    const child = results.filter(x => x.parent)
       .map(cp => {
-        return Object.assign({}, { parent_id: cp.parent.id }, cp);
+        return Object.assign({}, { parent_id: cp.id }, cp);
       });
 
-    //collect and construct parent child object
-    _parents.forEach(p => {
-      delete p.created_at;
-      delete p.updated_at;
-
+    /* collect and construct parent child object */
+    parent.forEach(p => {
       let _childArr: any[] = [];
-      _childs.forEach(c => {
+      child.forEach(c => {
         if (p.id === c.parent_id) {
           delete c.child.created_at;
-          delete c.child.updated_at;
+          //delete c.child.updated_at;
 
           _childArr.push({
-            ...Object.assign({}, c.child, { _id: c.id, id: c.child.id })
+            ...Object.assign({}, c.child, {
+              //id: c.child_id,
+              id: c.child.id,
+              qty: c.qty,
+              cost: c.cost,
+              _id: c.id
+            })
           })
           return;
         }
@@ -57,9 +60,9 @@ export class CPRepository extends Repository<ContractProduct> {
     return ret;
   }
 
-  async saveContractProduct(dto: ReqCPDto): Promise<ResCPDto> {
-    const pr = getCustomRepository(ProductsRepository);
-    const totalRec = await pr.createQueryBuilder().getCount();
+  async saveContractProduct(dto: ReqCPDto): Promise<ContractProductResponseDto> {
+    const product_repo = getCustomRepository(ProductsRepository);
+    const totalRec = await product_repo.createQueryBuilder().getCount();
 
     /* increment position */
     const { id, parent, children, contract } = dto;
@@ -74,7 +77,9 @@ export class CPRepository extends Repository<ContractProduct> {
         return _.pickBy({
           id: cp._id,
           parent: parent && cp.id !== parent.id ? parent : null,
-          child: cp, 
+          child: cp,
+          qty: cp.qty,
+          cost: cp.cost,
           contract
         }, _.identity)
       })
@@ -86,10 +91,10 @@ export class CPRepository extends Repository<ContractProduct> {
       cp_payload.forEach(async (cp) => {
         /* if the parent or child doesnt have an id then insert to products */
         if (cp.parent && !cp.parent.id) {
-          cp.parent = await pr.save(cp.parent);
+          cp.parent = await product_repo.save(cp.parent);
         }
         if (cp.child && !cp.child.id) {
-          cp.child = await pr.save(cp.child);
+          cp.child = await product_repo.save(cp.child);
         }
 
         /* if the product has an id then update to contract products */
@@ -109,12 +114,12 @@ export class CPRepository extends Repository<ContractProduct> {
     /* collect all the childrens */
     let sub_products: Product[] = results
       .filter(sp => {
-        return sp.parent ? (sp.child.id !== _parent.id ? sp.child : sp ) : null;
+        return sp.parent ? (sp.child.id !== _parent.id ? sp.child : sp) : null;
       })
       .map(c => c.child);
 
     /* build dto response */
-    const ret: ResCPDto = {
+    const ret: ContractProductResponseDto = {
       ..._parent,
       sub_products,
       contract: {

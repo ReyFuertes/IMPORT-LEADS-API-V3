@@ -1,7 +1,5 @@
-import { UpdateVenueDto } from './dto/update-venue.dto';
-import { CreateVenueDto } from './dto/create-venue.dto';
+import { ReqVenueDto, DeleteVenueDto, IVenueDto } from './venues.dto';
 import { VenuesRepository } from './venues.repository';
-import { GetVenuesDto } from './dto/get-venues-dto';
 import { Venue } from './venues.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,26 +7,30 @@ import { BaseService } from 'src/base.service';
 
 @Injectable()
 export class VenuesService extends BaseService<Venue> {
-  constructor(@InjectRepository(VenuesRepository) public venuesRepository: VenuesRepository) {
-    super(venuesRepository);
+  constructor(@InjectRepository(VenuesRepository) public repo: VenuesRepository,) {
+    super(repo);
   }
-  async getAllVenues(getBorrowerFilterDto: GetVenuesDto): Promise<Venue[]> {
-    return this.venuesRepository.getVenues(getBorrowerFilterDto)
+  async getAllVenues(): Promise<IVenueDto[]> {
+    return this.repo.getVenues()
   }
   async getById(id: string): Promise<Venue> {
-    const venue = await this.get(id, ['venue']);
+    const venue = await this.repo.findOne(id);
     if (!venue) {
       throw new NotFoundException(`Venue with ID "${id}" not found`);
     }
     return venue;
   }
-  async createVenue(createVenueDto: CreateVenueDto): Promise<Venue> {
-    return this.create(createVenueDto);
+
+  async updateVenue(updateVenueDto: Venue): Promise<Venue> {
+    return this.repo.saveVenue(updateVenueDto);
   }
-  async updateVenue(updateVenueDto: UpdateVenueDto): Promise<Venue> {
-    return this.update(updateVenueDto);
+
+  async addVenue(IVenueDto: Venue): Promise<Venue> {
+    return this.repo.saveVenue(IVenueDto);
   }
-  async deleteById(id: number): Promise<void> {
-    await this.delete(id);
+
+  async deleteById(id: string): Promise<DeleteVenueDto> {
+    return this.repo.deleteById(id);
   }
+
 }

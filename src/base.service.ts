@@ -1,7 +1,7 @@
 import { IBaseService } from './IBaseService';
 import { BadGatewayException } from '@nestjs/common';
 import { Repository, BaseEntity } from 'typeorm';
-import _ = require("lodash");
+import * as _ from 'lodash';
 
 export class BaseService<T extends BaseEntity> implements IBaseService<T>{
   constructor(private readonly genericRepository: Repository<T>) { }

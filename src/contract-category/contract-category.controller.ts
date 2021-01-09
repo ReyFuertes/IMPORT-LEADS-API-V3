@@ -6,6 +6,21 @@ import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query,
 export class ContractCategoryController {
   constructor(private srv: ContractCategoryService) { }
 
+  @Get()
+  getAll(@Query() getAllDto: any ): Promise<any> {
+    return this.srv.getAllContractCategories(getAllDto);
+  }
+
+  @Post('/down')
+  moveDown(@Body() dto: any): Promise<any> {
+    return this.srv.moveDown(dto);
+  }
+
+  @Post('/up')
+  moveUp(@Body() dto: any): Promise<any> {
+    return this.srv.moveUp(dto);
+  }
+
   @Patch()
   patch(@Body() dto: ContractCategoryDto): Promise<ContractCategoryDto> {
     return this.srv.saveContractCategory(dto);
@@ -29,6 +44,11 @@ export class ContractCategoryController {
   @Post()
   create(@Body() dto: ContractCategoryDto): Promise<ContractCategoryDto> {
     return this.srv.createContractCategory(dto);
+  }
+
+  @Post('multiple')
+  saveMultiple(@Body() dto: ContractCategoryDto[]): Promise<ContractCategoryDto[]> {
+    return this.srv.saveMultiple(dto);
   }
 
   // @Patch()

@@ -1,3 +1,4 @@
+import { ContractChecklist } from './../contract-checklist/contract-checklist.entity';
 import { ContractTerm } from './../contract-term/contract-term.entity';
 import { Contract } from './../contracts/contracts.entity';
 import {
@@ -5,27 +6,46 @@ import {
   CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany
 } from "typeorm";
 import { Category } from "src/category/category.entity";
+import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
+import { InspectionChecklistComment } from 'src/inspection-checklist-comment/inspection-checklist-comment.entity';
+import { InspectionChecklistProduct } from 'src/inspection-checklist-product/inspection-checklist-product.entity';
 
-@Entity({ synchronize: true })
+@Entity({ synchronize: false })
 export class ContractCategory extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
   id: string;
 
-  @ManyToOne(() => Category)
+  @Column({ nullable: true })
+  category_id: number;
+
+  @CreateDateColumn()
+  created_at: string;
+
+  @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
-  @ManyToOne(() => Contract)
+  @ManyToOne(() => Contract, p => p.contract_category, 
+  { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contract_id' })
   contract: Contract;
 
   @OneToMany(() => ContractTerm, t => t.contract_category, { onDelete: 'CASCADE' })
   terms: ContractTerm[];
 
-  @CreateDateColumn()
-  created_at: string;
+  @Column({ nullable: true })
+  position: number;
 
-  @UpdateDateColumn({ type: "timestamp" })
-  updated_at: number;
+  @OneToMany(() => SavedChecklistItem, c => c.contract_category,
+    { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  checklist_category: SavedChecklistItem[];
+
+  @OneToMany(() => InspectionChecklistComment, ct => ct.contract_category,
+    { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  inspection_checklist_comment: InspectionChecklistComment[];
+
+  @OneToMany(() => InspectionChecklistProduct, ct => ct.contract_category,
+    { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  inspection_checklist_product: InspectionChecklistProduct[];
 }

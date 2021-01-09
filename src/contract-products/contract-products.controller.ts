@@ -1,4 +1,4 @@
-import { ReqCPDto, ResCPDto } from './contract-product.dto';
+import { ReqCPDto, ContractProductResponseDto } from './contract-product.dto';
 import { CPService } from './contract-products.service';
 import { Controller, Post, Body, Delete, ParseIntPipe, Param, Get, Patch } from '@nestjs/common';
 
@@ -7,17 +7,17 @@ export class CPController {
   constructor(private contractProductsSrv: CPService) { }
 
   @Get('/:id')
-  getById(@Param('id') id: string): Promise<ResCPDto[]> {
+  getById(@Param('id') id: string): Promise<ContractProductResponseDto[]> {
     return this.contractProductsSrv.getByContractId(id);
   }
 
   @Post()
-  create(@Body() dto: ReqCPDto): Promise<ResCPDto> {
+  create(@Body() dto: ReqCPDto): Promise<ContractProductResponseDto> {
     return this.contractProductsSrv.saveContractProduct(dto);
   }
 
   @Patch()
-  update(@Body() dto: ReqCPDto): Promise<ResCPDto> {
+  update(@Body() dto: ReqCPDto): Promise<ContractProductResponseDto> {
     return this.contractProductsSrv.saveContractProduct(dto);
   }
 

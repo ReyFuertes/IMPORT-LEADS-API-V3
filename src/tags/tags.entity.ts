@@ -3,7 +3,7 @@ import { ContractTerm } from './../contract-term/contract-term.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, OneToMany, ManyToOne } from "typeorm";
 
 
-@Entity()
+@Entity({synchronize: false })
 export class Tag extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

@@ -1,7 +1,7 @@
 import { Tag } from './../tags/tags.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity()
+@Entity({synchronize: false })
 export class TagQuestion extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

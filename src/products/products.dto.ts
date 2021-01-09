@@ -1,7 +1,7 @@
 import { GetDto } from './../models/generic.model';
 import { Product } from 'src/products/products.entity';
 
-export class ProductDto {
+export class IProductDto {
   id?: string;
   product_name?: string;
   cost?: number;
@@ -9,11 +9,11 @@ export class ProductDto {
   parent?: Product;
 }
 
-export class ResProdDto extends ProductDto {
+export class ResProdDto extends IProductDto {
   pos?: number;
 }
 
-export class ReqProdDto extends ProductDto {
+export class ReqProdDto extends IProductDto {
   pos?: any;
 }
 

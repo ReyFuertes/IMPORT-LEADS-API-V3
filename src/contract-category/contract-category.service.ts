@@ -11,6 +11,18 @@ export class ContractCategoryService extends BaseService<ContractCategory> {
     super(repo);
   }
 
+  async getAllContractCategories(dto: any): Promise<any> {
+    return this.repo.getAllContractCategories(dto);
+  }
+
+  async moveDown(dto: any): Promise<ContractCategoryDto> {
+    return this.repo.moveDown(dto);
+  }
+
+  async moveUp(dto: any): Promise<ContractCategoryDto> {
+    return this.repo.moveUp(dto);
+  }
+
   async saveContractCategory(dto: ContractCategoryDto): Promise<ContractCategoryDto> {
     return this.repo.saveContractCategory(dto);
   }
@@ -29,5 +41,9 @@ export class ContractCategoryService extends BaseService<ContractCategory> {
 
   async createContractCategory(dto: ContractCategoryDto): Promise<ContractCategoryDto> {
     return this.repo.saveContractCategory(dto);
+  }
+
+  async saveMultiple(dto: ContractCategoryDto[]): Promise<ContractCategoryDto[]> {
+    return this.repo.saveMultiple(dto);
   }
 }

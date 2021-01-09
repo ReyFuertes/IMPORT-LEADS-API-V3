@@ -2,8 +2,7 @@ import { Product } from './products.entity';
 import { ReqProdDto, ResProdDto, } from './products.dto';
 import { sqlOp } from './../models/generic.model';
 import { Repository, EntityRepository } from 'typeorm';
-import _ = require("lodash");
-import { BadRequestException } from '@nestjs/common';
+import * as _ from 'lodash';
 
 @EntityRepository(Product)
 export class ProductsRepository extends Repository<Product> {
@@ -76,21 +75,6 @@ export class ProductsRepository extends Repository<Product> {
       .addOrderBy('product.parent_id', 'ASC')
       .getMany();
 
-    //get all the products with parents
-    let childParents = products.filter(cp => cp.parent);
-
-    products.forEach(p => {
-      let costs = 0;
-      //iterate all products with parents and get the product cost
-      childParents.forEach(cp => {
-        if (cp.parent.id === p.id) {
-          costs += cp.cost;
-        }
-      });
-      //do not assign if its 0
-      if (costs !== 0)
-        p.cost += costs;
-    });
     return products;
   }
 }

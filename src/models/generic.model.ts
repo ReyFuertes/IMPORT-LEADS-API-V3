@@ -2,7 +2,7 @@ import { IsOptional, IsNotEmpty } from 'class-validator';
 export enum sqlOp {
   eq = '=',
   like = 'like',
-  iLike = 'ilike'
+  iLike = 'ILIKE'
 }
 export class GetDto {
   @IsOptional()

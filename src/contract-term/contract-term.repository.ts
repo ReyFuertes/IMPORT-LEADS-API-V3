@@ -1,6 +1,8 @@
+import { ContractCategory } from './../contract-category/contract-category.entity';
+import { ContractCategoryRepository } from './../contract-category/contract-category.repository';
 import { ContractTermDto } from './contract-term.dto';
 import { ContractTerm } from './contract-term.entity';
-import { Repository, EntityRepository } from 'typeorm';
+import { Repository, EntityRepository, getRepository } from 'typeorm';
 
 @EntityRepository(ContractTerm)
 export class ContractTermRepository extends Repository<ContractTerm> {

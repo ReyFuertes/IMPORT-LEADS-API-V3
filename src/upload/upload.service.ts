@@ -1,4 +1,4 @@
-import { CreateImageDto } from './dto/create-image.dto';
+import { ReqImageDto } from './upload-image.dto';
 import { UploadRepository } from './upload.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,13 +6,18 @@ import { BaseService } from 'src/base.service';
 
 @Injectable()
 export class UploadService extends BaseService<any> {
-  constructor(@InjectRepository(UploadRepository) public contractsRepository: UploadRepository) {
-    super(contractsRepository)
+  constructor(@InjectRepository(UploadRepository) public repo: UploadRepository) {
+    super(repo)
   }
-  async saveImages(imagesDto: CreateImageDto[]) {
-    imagesDto && imagesDto.forEach(dto => {
+
+  async saveImage(dto: ReqImageDto) {
+    return this.repo.save(dto);
+  }
+
+  async saveImages(dto: ReqImageDto[]) {
+    dto && dto.forEach(dto => {
       this.create(dto);
     });
-    return imagesDto;
+    return dto;
   }
 }
