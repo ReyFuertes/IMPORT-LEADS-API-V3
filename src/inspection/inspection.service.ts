@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { InspectionRepository } from './inspection.repository';
 import { Inspection } from './inspection.entity';
 import { GetInspectionDto } from './inspection.dto';

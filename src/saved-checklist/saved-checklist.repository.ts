@@ -3,13 +3,13 @@ import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import * as _ from 'lodash';
 import { SavedChecklist } from './saved-checklist.entity';
 import { GetSavedChecklistDto, ISavedChecklistDto } from './saved-checklist.dto';
-import { SavedChecklistItemsRepository } from 'src/saved-checklist-items/saved-checklist-items.repository';
-import { ISavedChecklistItem, ISavedChecklistItemDto } from 'src/saved-checklist-items/saved-checklist-items.dto';
-import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
-import { IProductDto } from 'src/products/products.dto';
-import { ProductsRepository } from 'src/products/products.repository';
-import { UserRepository } from 'src/user/user.repository';
-import { IUserDto } from 'src/user/user.dto';
+import { SavedChecklistItemsRepository } from '../saved-checklist-items/saved-checklist-items.repository';
+import { ISavedChecklistItem, ISavedChecklistItemDto } from '../saved-checklist-items/saved-checklist-items.dto';
+import { SavedChecklistItem } from '../saved-checklist-items/saved-checklist-items.entity';
+import { IProductDto } from '../products/products.dto';
+import { ProductsRepository } from '../products/products.repository';
+import { UserRepository } from '../user/user.repository';
+import { IUserDto } from '../user/user.dto';
 import { Console } from 'console';
 
 @EntityRepository(SavedChecklist)

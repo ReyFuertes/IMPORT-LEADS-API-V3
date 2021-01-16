@@ -1,7 +1,7 @@
 import { BaseEntity, PrimaryGeneratedColumn, Generated, ManyToOne, OneToOne, Column, Entity } from "typeorm";
 import { User } from "src/user/user.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class UserProfile extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

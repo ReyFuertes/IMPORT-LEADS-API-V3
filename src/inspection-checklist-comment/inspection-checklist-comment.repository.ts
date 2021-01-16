@@ -3,10 +3,10 @@ import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
 import { InspectionChecklistComment } from './inspection-checklist-comment.entity';
 import { IInspectionChecklistCommentDto } from './inspection-checklist-comment.dto';
-import { SavedChecklistRepository } from 'src/saved-checklist/saved-checklist.repository';
-import { ISavedChecklistDto } from 'src/saved-checklist/saved-checklist.dto';
-import { InspectionChecklistImageRepository } from 'src/inspection-checklist-image/inspection-checklist-image.repository';
-import { IInspectionChecklistImageDto } from 'src/inspection-checklist-image/inspection-checklist-image.dto';
+import { SavedChecklistRepository } from '../saved-checklist/saved-checklist.repository';
+import { ISavedChecklistDto } from '../saved-checklist/saved-checklist.dto';
+import { InspectionChecklistImageRepository } from '../inspection-checklist-image/inspection-checklist-image.repository';
+import { IInspectionChecklistImageDto } from '../inspection-checklist-image/inspection-checklist-image.dto';
 
 @EntityRepository(InspectionChecklistComment)
 export class InspectionChecklistCommentRepository extends Repository<InspectionChecklistComment> {

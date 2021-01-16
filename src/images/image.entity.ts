@@ -1,7 +1,7 @@
 import { Venue } from './../venues/venues.entity';
 import { Contract } from './../contracts/contracts.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm";
-import { ContractTerm } from 'src/contract-term/contract-term.entity';
+import { ContractTerm } from '../contract-term/contract-term.entity';
 
 @Entity({synchronize: true })
 export class Image extends BaseEntity {

@@ -2,7 +2,7 @@ import { ReqImageDto } from './upload-image.dto';
 import { UploadRepository } from './upload.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 
 @Injectable()
 export class UploadService extends BaseService<any> {
@@ -15,7 +15,7 @@ export class UploadService extends BaseService<any> {
   }
 
   async saveImages(dto: ReqImageDto[]) {
-    dto && dto.forEach(dto => {
+    dto?.forEach(dto => {
       this.create(dto);
     });
     return dto;

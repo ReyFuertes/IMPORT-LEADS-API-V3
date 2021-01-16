@@ -8,6 +8,7 @@ import { diskStorage } from 'multer';
 @Controller('upload')
 export class UploadController {
   constructor(private uploadSrv: UploadService) { }
+
   /* upload multiple files */
   @Post('multiple')
   @UseInterceptors(FilesInterceptor('files', 50, {
@@ -19,7 +20,9 @@ export class UploadController {
     }),
     fileFilter: (req, file, cb) => filter(req, file, cb),
   }))
-  async upload(@UploadedFiles() files: ReqImageDto[]) { }
+  async uploadMultiple(@UploadedFiles() files: ReqImageDto[]) {
+
+  }
 
   /* upload single file */
   @Post('single')

@@ -2,7 +2,7 @@
 import { GCDto } from '../contracts/contracts.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { SavedChecklistItem } from './saved-checklist-items.entity';
 import { SavedChecklistItemsRepository } from './saved-checklist-items.repository';
 

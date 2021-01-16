@@ -2,11 +2,11 @@ import { ContractProduct } from './../contract-products/contract-products.entity
 import { Contract } from './../contracts/contracts.entity';
 import { ContractCategory } from './../contract-category/contract-category.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Generated, OneToOne, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
-import { ContractTerm } from 'src/contract-term/contract-term.entity';
-import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
-import { SavedChecklist } from 'src/saved-checklist/saved-checklist.entity';
+import { ContractTerm } from '../contract-term/contract-term.entity';
+import { SavedChecklistItem } from '../saved-checklist-items/saved-checklist-items.entity';
+import { SavedChecklist } from '../saved-checklist/saved-checklist.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class ContractChecklist extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

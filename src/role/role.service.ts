@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { GetRoleDto, IRoleDto } from './role.dto';
-import { UserRoleRepository } from 'src/user-role/user-role.repository';
+import { UserRoleRepository } from '../user-role/user-role.repository';
 import { RoleRepository } from './role.repository';
 import { Role } from './role.entity';
 

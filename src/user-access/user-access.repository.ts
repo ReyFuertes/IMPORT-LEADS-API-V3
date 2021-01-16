@@ -52,8 +52,6 @@ export class UserAccessRepository extends Repository<UserAccess> {
         user: { id: dto.user.id }
       }
     })
-  
     return userDto;
   }
 }
-

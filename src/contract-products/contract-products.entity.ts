@@ -2,10 +2,10 @@ import { ContractChecklist } from './../contract-checklist/contract-checklist.en
 import { Contract } from './../contracts/contracts.entity';
 import { Product } from './../products/products.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Generated, OneToOne, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
-import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
-import { InspectionChecklistComment } from 'src/inspection-checklist-comment/inspection-checklist-comment.entity';
-import { InspectionChecklistProduct } from 'src/inspection-checklist-product/inspection-checklist-product.entity';
-@Entity({ synchronize: false })
+import { SavedChecklistItem } from '../saved-checklist-items/saved-checklist-items.entity';
+import { InspectionChecklistComment } from '../inspection-checklist-comment/inspection-checklist-comment.entity';
+import { InspectionChecklistProduct } from '../inspection-checklist-product/inspection-checklist-product.entity';
+@Entity({ synchronize: true })
 export class ContractProduct extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
@@ -37,6 +37,12 @@ export class ContractProduct extends BaseEntity {
   @ManyToOne(() => Product, p => p.contract_parent, { nullable: true })
   @JoinColumn({ name: 'parent_id' })
   parent: Product;
+
+  @Column({ nullable: true })
+  child_id?: string;
+
+  @Column({ nullable: true })
+  parent_id?: string;
 
   @ManyToOne(() => Product, p => p.contract_child, { nullable: true })
   @JoinColumn({ name: 'child_id' })

@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res, UseGuards } from '@nestjs/common';
 import { UserRoleService } from './user-role.service';
 import { IUserRoleDto } from './user-role.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user-role')
 export class UserRoleController {
@@ -12,6 +13,7 @@ export class UserRoleController {
   }
 
   @Post()
+  //@UseGuards(AuthGuard('jwt'))
   create(@Body() dto: any): Promise<IUserRoleDto> {
     return this.srv.saveUserRole(dto);
   }

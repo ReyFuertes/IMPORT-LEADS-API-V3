@@ -2,10 +2,10 @@ import { ImagesRepository } from './../images/images.repository';
 import { UploadRepository } from './../upload/upload.repository';
 import { ContractDto } from './../contracts/contracts.dto';
 import { Contract } from './../contracts/contracts.entity';
-import { Venue } from 'src/venues/venues.entity';
+import { Venue } from '../venues/venues.entity';
 import { Repository, EntityRepository, getRepository, getCustomRepository } from 'typeorm';
 import { DeleteVenueDto, IVenueDto } from './venues.dto';
-import { VenueProducts } from 'src/venues-products/venue-products.entity';
+import { VenueProducts } from '../venues-products/venue-products.entity';
 
 @EntityRepository(Venue)
 export class VenuesRepository extends Repository<Venue> {
@@ -36,7 +36,7 @@ export class VenuesRepository extends Repository<Venue> {
 
   async processResults(venues: Venue[], vp_results: VenueProducts[], contract_results: ContractDto[]): Promise<IVenueDto[]> {
     let venuesArr: IVenueDto[] = [];
-    venues.forEach(async venue => {
+    venues?.forEach(async venue => {
       let venueObj: IVenueDto;
       let products: any[] = [];
 

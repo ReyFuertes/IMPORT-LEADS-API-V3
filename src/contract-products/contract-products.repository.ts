@@ -44,8 +44,8 @@ export class ContractProductRepository extends Repository<ContractProduct> {
 
           _childArr.push({
             ...Object.assign({}, c.child, {
-              //id: c.child_id,
-              id: c.child.id,
+              id: c.child_id,
+              //id: c.child.id,
               qty: c.qty,
               cost: c.cost,
               _id: c.id

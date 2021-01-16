@@ -28,7 +28,6 @@
     "@nestjs/passport": "^7.1.0",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
-    "@nestjs/testing": "^7.0.0",
     "@nestjs/typeorm": "^7.0.0",
     "@types/express": "^4.17.3",
     "@types/jest": "25.1.4",
@@ -63,7 +62,9 @@
     "typescript": "^3.7.4",
     "uuid": "^8.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@nestjs/testing": "^7.6.5"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",

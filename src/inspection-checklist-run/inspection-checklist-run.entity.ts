@@ -6,7 +6,7 @@ import { InspectionChecklistImage } from "src/inspection-checklist-image/inspect
 import { InspectionChecklistProduct } from "src/inspection-checklist-product/inspection-checklist-product.entity";
 import { Inspection } from "src/inspection/inspection.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class InspectionChecklistRun extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

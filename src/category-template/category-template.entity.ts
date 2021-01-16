@@ -2,7 +2,7 @@ import { Category } from "src/category/category.entity";
 import { Contract } from "src/contracts/contracts.entity";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class CategoryTemplate extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
@@ -20,7 +20,7 @@ export class CategoryTemplate extends BaseEntity {
   category: Category;
 
   @ManyToOne(() => Contract, cp => cp.category_template,
-    { nullable: true })
+    { nullable: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contract_id' })
   contract: Contract;
 }

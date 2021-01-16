@@ -2,7 +2,7 @@ import { CategoryDto } from './category.dto';
 import { CategoryRepository } from './category.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { Category } from './category.entity';
 
 @Injectable()

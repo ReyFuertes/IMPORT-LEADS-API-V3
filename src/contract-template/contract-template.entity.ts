@@ -1,7 +1,7 @@
 import { Contract } from "src/contracts/contracts.entity";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class ContractTemplate extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { UserRole } from './user-role.entity';
 import { IUserRoleDto } from './user-role.dto';
 import { UserRoleRepository } from './user-role.repository';

@@ -1,14 +1,14 @@
 import { ContractProduct } from './../contract-products/contract-products.entity';
-import { Venue } from 'src/venues/venues.entity';
+import { Venue } from '../venues/venues.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Generated, OneToOne, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
-import { Image } from 'src/images/image.entity';
-import { SavedChecklist } from 'src/saved-checklist/saved-checklist.entity';
-import { User } from 'src/user/user.entity';
-import { ContractCategory } from 'src/contract-category/contract-category.entity';
-import { ContractTemplate } from 'src/contract-template/contract-template.entity';
-import { CategoryTemplate } from 'src/category-template/category-template.entity';
+import { Image } from '../images/image.entity';
+import { SavedChecklist } from '../saved-checklist/saved-checklist.entity';
+import { User } from '../user/user.entity';
+import { ContractCategory } from '../contract-category/contract-category.entity';
+import { ContractTemplate } from '../contract-template/contract-template.entity';
+import { CategoryTemplate } from '../category-template/category-template.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

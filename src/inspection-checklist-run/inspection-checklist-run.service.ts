@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { InspectionChecklistRun } from './inspection-checklist-run.entity';
 import { InspectionChecklistRunRepository } from './inspection-checklist-run.repository';
 import { IInspectionChecklistRunDto, IInspectionRunDto } from './inspection-checklist-run.dto';

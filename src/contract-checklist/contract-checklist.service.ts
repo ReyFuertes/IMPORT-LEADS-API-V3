@@ -3,7 +3,7 @@ import { ContractChecklistRepository } from './contract-checklist.repository';
 import { ContractChecklist } from './contract-checklist.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 
 @Injectable()
 export class ContractChecklistService extends BaseService<ContractChecklist> {

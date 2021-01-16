@@ -1,5 +1,5 @@
 import { GetDto } from '../models/generic.model';
-import { IUserDto } from 'src/user/user.dto';
+import { IUserDto } from '../user/user.dto';
 
 export class ISavedChecklistDto {
   id?: string;

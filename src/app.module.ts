@@ -32,9 +32,18 @@ import { InspectionChecklistProductModule } from './inspection-checklist-product
 import { InspectionChecklistReportModule } from './inspection-checklist-report/inspection-checklist-report.module';
 import { ContractTemplateModule } from './contract-template/contract-template.module';
 import { CategoryTemplateModule } from './category-template/category-template.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'topsecretbenbooterkooper',
+      signOptions: {
+        expiresIn: 3600
+      }
+    }),
     TypeOrmModule.forRoot(typeOrmConfig),
     ContractsModule,
     UploadModule,
@@ -66,7 +75,7 @@ import { CategoryTemplateModule } from './category-template/category-template.mo
     InspectionChecklistProductModule,
     InspectionChecklistReportModule,
     ContractTemplateModule,
-    CategoryTemplateModule
+    CategoryTemplateModule,
   ],
   controllers: [],
   providers: [],

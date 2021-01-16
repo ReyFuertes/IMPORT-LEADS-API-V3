@@ -1,6 +1,6 @@
-import { ContractCategory } from 'src/contract-category/contract-category.entity';
-import { ContractTerm } from 'src/contract-term/contract-term.entity';
-import { ContractsRepository } from 'src/contracts/contracts.repository';
+import { ContractCategory } from '../contract-category/contract-category.entity';
+import { ContractTerm } from '../contract-term/contract-term.entity';
+import { ContractsRepository } from '../contracts/contracts.repository';
 import { Repository, EntityRepository, getCustomRepository, getRepository } from 'typeorm';
 import { ContractTemplate } from './contract-template.entity';
 

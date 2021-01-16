@@ -1,7 +1,7 @@
 import { Image } from './../images/image.entity';
 import { GetDto } from './../models/generic.model';
 import { Venue } from './../venues/venues.entity';
-import { User } from 'src/user/user.entity';
+import { User } from '../user/user.entity';
 
 export class ContractDto {
   id?: string;

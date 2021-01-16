@@ -1,5 +1,5 @@
 import { GetDto } from './../models/generic.model';
-import { Product } from 'src/products/products.entity';
+import { Product } from '../products/products.entity';
 
 export class IProductDto {
   id?: string;

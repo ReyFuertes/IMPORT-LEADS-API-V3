@@ -1,14 +1,14 @@
 import { ContractChecklist } from './../contract-checklist/contract-checklist.entity';
-import { Image } from 'src/images/image.entity';
+import { Image } from '../images/image.entity';
 import { Tag } from './../tags/tags.entity';
 import { ContractCategory } from './../contract-category/contract-category.entity';
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinColumn, JoinTable } from "typeorm";
-import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
-import { InspectionChecklistComment } from 'src/inspection-checklist-comment/inspection-checklist-comment.entity';
-import { InspectionChecklistImage } from 'src/inspection-checklist-image/inspection-checklist-image.entity';
-import { InspectionChecklistProduct } from 'src/inspection-checklist-product/inspection-checklist-product.entity';
+import { SavedChecklistItem } from '../saved-checklist-items/saved-checklist-items.entity';
+import { InspectionChecklistComment } from '../inspection-checklist-comment/inspection-checklist-comment.entity';
+import { InspectionChecklistImage } from '../inspection-checklist-image/inspection-checklist-image.entity';
+import { InspectionChecklistProduct } from '../inspection-checklist-product/inspection-checklist-product.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class ContractTerm extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

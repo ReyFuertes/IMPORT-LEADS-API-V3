@@ -6,7 +6,7 @@ import { ContractCategory } from "src/contract-category/contract-category.entity
 import { ContractChecklist } from "src/contract-checklist/contract-checklist.entity";
 import { SavedChecklist } from "src/saved-checklist/saved-checklist.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class InspectionChecklistProduct extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

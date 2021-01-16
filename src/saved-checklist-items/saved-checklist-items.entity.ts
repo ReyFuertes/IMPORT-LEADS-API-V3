@@ -1,10 +1,10 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinColumn } from "typeorm";
-import { SavedChecklist } from 'src/saved-checklist/saved-checklist.entity';
+import { SavedChecklist } from '../saved-checklist/saved-checklist.entity';
 import { ContractProduct } from "src/contract-products/contract-products.entity";
 import { ContractCategory } from "src/contract-category/contract-category.entity";
 import { ContractTerm } from "src/contract-term/contract-term.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class SavedChecklistItem extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

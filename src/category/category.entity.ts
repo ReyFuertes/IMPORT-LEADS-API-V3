@@ -3,9 +3,9 @@ import {
   BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, ManyToMany,
   CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany
 } from "typeorm";
-import { CategoryTemplate } from 'src/category-template/category-template.entity';
+import { CategoryTemplate } from '../category-template/category-template.entity';
 
-@Entity({synchronize: false })
+@Entity({synchronize: true })
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

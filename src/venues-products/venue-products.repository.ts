@@ -1,4 +1,4 @@
-import { Venue } from 'src/venues/venues.entity';
+import { Venue } from '../venues/venues.entity';
 import { Repository, EntityRepository, getRepository } from 'typeorm';
 import { VenueProducts } from './venue-products.entity';
 import { VenueProductsDto } from './venue-products.dto';

@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 import { AuthCredentialDto } from './auth.dto';
 import { ConflictException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UserProfileRepository } from 'src/user-profile/user-profile.repository';
-import { User } from 'src/user/user.entity';
+import { UserProfileRepository } from '../user-profile/user-profile.repository';
+import { User } from '../user/user.entity';
 
 @EntityRepository(User)
 export class AuthRepository extends Repository<User> {

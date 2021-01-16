@@ -5,7 +5,7 @@ import { ContractCategory } from "src/contract-category/contract-category.entity
 import { SavedChecklist } from "src/saved-checklist/saved-checklist.entity";
 import { ContractProduct } from "src/contract-products/contract-products.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class InspectionChecklistComment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

@@ -6,11 +6,11 @@ import {
   CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany
 } from "typeorm";
 import { Category } from "src/category/category.entity";
-import { SavedChecklistItem } from 'src/saved-checklist-items/saved-checklist-items.entity';
-import { InspectionChecklistComment } from 'src/inspection-checklist-comment/inspection-checklist-comment.entity';
-import { InspectionChecklistProduct } from 'src/inspection-checklist-product/inspection-checklist-product.entity';
+import { SavedChecklistItem } from '../saved-checklist-items/saved-checklist-items.entity';
+import { InspectionChecklistComment } from '../inspection-checklist-comment/inspection-checklist-comment.entity';
+import { InspectionChecklistProduct } from '../inspection-checklist-product/inspection-checklist-product.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class ContractCategory extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { ContractTemplate } from './contract-template.entity';
 import { ContractTemplateRepository } from './contract-template.repository';
 

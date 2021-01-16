@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { AuthCredentialDto, IUserAuthDto } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthRepository } from './auth-repository';
-import { User } from 'src/user/user.entity';
-import { IUserDto } from 'src/user/user.dto';
+import { User } from '../user/user.entity';
+import { IUserDto } from '../user/user.dto';
 
 @Injectable()
 export class AuthService extends BaseService<User> {
@@ -21,7 +21,7 @@ export class AuthService extends BaseService<User> {
       const payload = { id: user.id, username: user.username };
       const accessToken = await this.jwtSrv.sign(payload);
 
-      return { accessToken, user: { id: user.id, username: user.username, image: user.user_profile.image } };
+      return { accessToken, user: { id: user?.id, username: user?.username, image: user?.user_profile?.image } };
     }
   }
 

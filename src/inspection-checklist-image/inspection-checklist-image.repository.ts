@@ -1,6 +1,4 @@
-import { sqlOp } from '../models/generic.model';
-import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
-import { BadRequestException } from '@nestjs/common';
+import { Repository, EntityRepository } from 'typeorm';
 import { InspectionChecklistImage } from './inspection-checklist-image.entity';
 import { IInspectionChecklistImageDto } from './inspection-checklist-image.dto';
 
@@ -16,16 +14,15 @@ export class InspectionChecklistImageRepository extends Repository<InspectionChe
   }
 
   async saveInsImage(dto: IInspectionChecklistImageDto[]): Promise<IInspectionChecklistImageDto[]> {
-
     /* delete the image first before inserting new one */
-    dto.forEach(async (image: IInspectionChecklistImageDto) => {
+    dto?.forEach(async (image: IInspectionChecklistImageDto) => {
       const criteria = {
         inspection_checklist_run: image.inspection_checklist_run,
         contract_term: image.contract_term
       };
       await this.delete(criteria)
     });
-
+ 
     return await this.save(dto);
   }
 }

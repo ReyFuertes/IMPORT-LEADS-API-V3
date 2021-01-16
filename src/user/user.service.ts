@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from './user.repository';
 import { GetUserDto, IUserDto } from './user.dto';
 import { User } from './user.entity';
-import { AuthService } from 'src/auth/auth-service';
+import { AuthService } from '../auth/auth-service';
 
 @Injectable()
 export class UserService extends BaseService<User> {

@@ -1,7 +1,7 @@
 import { VenueProductsDto } from './venue-products.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { VenueProducts } from './venue-products.entity';
 import { VenueProductsRepository } from './venue-products.repository';
 

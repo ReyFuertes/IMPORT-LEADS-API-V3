@@ -2,7 +2,7 @@ import { BaseEntity, PrimaryGeneratedColumn, Generated, ManyToOne, OneToOne, Col
 import { User } from "src/user/user.entity";
 import { Role } from "src/role/role.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class UserRole extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

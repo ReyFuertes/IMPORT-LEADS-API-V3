@@ -3,8 +3,8 @@ import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
 import { InspectionRuntime } from './inspection-runtime.entity';
 import { IInspectionStatusPayload } from './inspection-runtime.dto';
-import { InspectionChecklistRunRepository } from 'src/inspection-checklist-run/inspection-checklist-run.repository';
-import { RunStatusType } from 'src/inspection-checklist-run/inspection-checklist-run.dto';
+import { InspectionChecklistRunRepository } from '../inspection-checklist-run/inspection-checklist-run.repository';
+import { RunStatusType } from '../inspection-checklist-run/inspection-checklist-run.dto';
 import * as moment from 'moment';
 
 @EntityRepository(InspectionRuntime)

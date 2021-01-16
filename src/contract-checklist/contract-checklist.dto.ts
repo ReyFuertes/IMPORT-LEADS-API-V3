@@ -3,9 +3,9 @@ import { GetDto } from './../models/generic.model';
 import { Contract } from './../contracts/contracts.entity';
 import { ContractCategory } from './../contract-category/contract-category.entity';
 import { ContractProduct } from './../contract-products/contract-products.entity';
-import { ContractTerm } from 'src/contract-term/contract-term.entity';
-import { IProductDto } from 'src/products/products.dto';
-import { IContractProduct } from 'src/contract-products/contract-product.dto';
+import { ContractTerm } from '../contract-term/contract-term.entity';
+import { IProductDto } from '../products/products.dto';
+import { IContractProduct } from '../contract-products/contract-product.dto';
 export interface OverrideChecklistItemDto {
   source: IChecklistDto;
   destination: IChecklistDto;

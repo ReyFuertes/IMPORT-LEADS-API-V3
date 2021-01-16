@@ -3,7 +3,7 @@ import { SavedChecklist } from "src/saved-checklist/saved-checklist.entity";
 import { InspectionChecklistRun } from "src/inspection-checklist-run/inspection-checklist-run.entity";
 import { InspectionRuntime } from "src/inspection-runtime/inspection-runtime.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class Inspection extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

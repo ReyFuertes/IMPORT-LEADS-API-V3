@@ -1,13 +1,13 @@
 import { Contract } from '../contracts/contracts.entity';
 import { BaseEntity, PrimaryGeneratedColumn, Generated, ManyToOne, OneToOne, Column, Entity, JoinColumn, ManyToMany, OneToMany, Unique } from "typeorm";
 import * as bcrypt from 'bcrypt'
-import { UserProfile } from 'src/user-profile/user-profile.entity';
-import { UserAccess } from 'src/user-access/user-access.entity';
-import { UserRole } from 'src/user-role/user-role.entity';
-import { SavedChecklist } from 'src/saved-checklist/saved-checklist.entity';
-import { Company } from 'src/company/company.entity';
+import { UserProfile } from '../user-profile/user-profile.entity';
+import { UserAccess } from '../user-access/user-access.entity';
+import { UserRole } from '../user-role/user-role.entity';
+import { SavedChecklist } from '../saved-checklist/saved-checklist.entity';
+import { Company } from '../company/company.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 @Unique(['username'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')

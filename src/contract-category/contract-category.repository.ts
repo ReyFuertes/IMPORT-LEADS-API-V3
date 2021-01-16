@@ -3,7 +3,7 @@ import { CategoryRepository } from './../category/category.repository';
 import { ContractCategoryDto } from './contract-category.dto';
 import { ContractCategory } from './contract-category.entity';
 import { Repository, EntityRepository, getCustomRepository, getRepository } from 'typeorm';
-import { ContractTerm } from 'src/contract-term/contract-term.entity';
+import { ContractTerm } from '../contract-term/contract-term.entity';
 import * as _ from 'lodash';
 
 @EntityRepository(ContractCategory)

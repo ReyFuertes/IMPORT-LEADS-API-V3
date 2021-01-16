@@ -2,7 +2,7 @@ import { ContractTerm } from "src/contract-term/contract-term.entity";
 import { InspectionChecklistRun } from "src/inspection-checklist-run/inspection-checklist-run.entity";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class InspectionChecklistImage extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

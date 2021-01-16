@@ -1,7 +1,7 @@
 import { ContractDto } from './../contracts/contracts.dto';
 import { Contract } from './../contracts/contracts.entity';
 import { Product } from "src/products/products.entity";
-import { ContractChecklist } from 'src/contract-checklist/contract-checklist.entity';
+import { ContractChecklist } from '../contract-checklist/contract-checklist.entity';
 
 export class ContractProductDto {
   id?: string;

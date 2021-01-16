@@ -3,7 +3,7 @@ import {
   BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, OneToMany
 } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class Company extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

@@ -3,7 +3,7 @@ import { ContractProduct } from './contract-products.entity';
 import { ContractProductRepository } from './../contract-products/contract-products.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 
 @Injectable()
 export class CPService extends BaseService<ContractProduct> {

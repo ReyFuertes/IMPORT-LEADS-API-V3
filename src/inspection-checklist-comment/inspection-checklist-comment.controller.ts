@@ -1,17 +1,20 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res, UseGuards } from '@nestjs/common';
 import { InspectionChecklistCommentService } from './inspection-checklist-comment.service';
 import { IInspectionChecklistCommentDto, GetInspectionChecklistCommentDto } from './inspection-checklist-comment.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('inspection-checklist-comment')
 export class InspectionChecklistCommentController {
   constructor(private srv: InspectionChecklistCommentService) { }
 
   @Patch()
+  //////@UseGuards(AuthGuard('jwt'))
   update(@Body() dto: IInspectionChecklistCommentDto): Promise<IInspectionChecklistCommentDto> {
     return this.srv.updateChecklist(dto);
   }
 
   @Delete('/:id')
+  //////@UseGuards(AuthGuard('jwt'))
   deleteById(@Param('id') id: string): Promise<void> {
     return this.srv.deleteById(id);
   }
@@ -22,6 +25,7 @@ export class InspectionChecklistCommentController {
   }
 
   @Post()
+  //////@UseGuards(AuthGuard('jwt'))
   saveChecklist(@Body() dto: IInspectionChecklistCommentDto): Promise<IInspectionChecklistCommentDto> {
     return this.srv.saveChecklist(dto);
   }

@@ -4,7 +4,7 @@ import { ReqProdDto, ResProdDto } from './products.dto';
 import { ProductsRepository } from './products.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 
 @Injectable()
 export class ProductsService extends BaseService<Product> {

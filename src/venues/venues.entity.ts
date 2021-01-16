@@ -1,9 +1,9 @@
 import { Image } from './../images/image.entity';
 import { Contract } from './../contracts/contracts.entity';
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Generated, Column, OneToMany, ManyToOne, OneToOne } from "typeorm";
-import { VenueProducts } from 'src/venues-products/venue-products.entity';
+import { VenueProducts } from '../venues-products/venue-products.entity';
 
-@Entity({synchronize: false })
+@Entity({synchronize: true })
 export class Venue extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

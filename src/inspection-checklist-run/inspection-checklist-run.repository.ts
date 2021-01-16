@@ -1,20 +1,20 @@
 import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import { InspectionChecklistRun } from './inspection-checklist-run.entity';
 import { IInspectionChecklistRunDto, IInspectionRunDto, RunStatusType } from './inspection-checklist-run.dto';
-import { SavedChecklistItemsRepository } from 'src/saved-checklist-items/saved-checklist-items.repository';
-import { ProductsRepository } from 'src/products/products.repository';
-import { IProductDto } from 'src/products/products.dto';
-import { CategoryRepository } from 'src/category/category.repository';
-import { CategoryDto } from 'src/category/category.dto';
-import { InspectionChecklistCommentRepository } from 'src/inspection-checklist-comment/inspection-checklist-comment.repository';
-import { IInspectionChecklistCommentDto } from 'src/inspection-checklist-comment/inspection-checklist-comment.dto';
+import { SavedChecklistItemsRepository } from '../saved-checklist-items/saved-checklist-items.repository';
+import { ProductsRepository } from '../products/products.repository';
+import { IProductDto } from '../products/products.dto';
+import { CategoryRepository } from '../category/category.repository';
+import { CategoryDto } from '../category/category.dto';
+import { InspectionChecklistCommentRepository } from '../inspection-checklist-comment/inspection-checklist-comment.repository';
+import { IInspectionChecklistCommentDto } from '../inspection-checklist-comment/inspection-checklist-comment.dto';
 import { BadRequestException } from '@nestjs/common';
-import { InspectionRuntimeRepository } from 'src/inspection-runtime/inspection-runtime.repository';
-import { InspectionChecklistProductRepository } from 'src/inspection-checklist-product/inspection-checklist-product.repository';
-import { InspectionChecklistImageRepository } from 'src/inspection-checklist-image/inspection-checklist-image.repository';
-import { InspectionRepository } from 'src/inspection/inspection.repository';
+import { InspectionRuntimeRepository } from '../inspection-runtime/inspection-runtime.repository';
+import { InspectionChecklistProductRepository } from '../inspection-checklist-product/inspection-checklist-product.repository';
+import { InspectionChecklistImageRepository } from '../inspection-checklist-image/inspection-checklist-image.repository';
+import { InspectionRepository } from '../inspection/inspection.repository';
 import * as moment from 'moment';
-import { IInspectionChecklistProduct } from 'src/inspection-checklist-product/inspection-checklist-product.dto';
+import { IInspectionChecklistProduct } from '../inspection-checklist-product/inspection-checklist-product.dto';
 
 @EntityRepository(InspectionChecklistRun)
 export class InspectionChecklistRunRepository extends Repository<InspectionChecklistRun> {
@@ -28,7 +28,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
 
       const results: any[] = await query
         .select('id')
-        .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+        .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
         .getRawMany()
 
       record = results.filter(r => Number(r.row_number) === Number(dto.position)).shift();
@@ -43,23 +43,28 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
   }
 
   async copy(dto: { id: string, copyCount: number, contractProductId: string }): Promise<string> {
-    const exist = await this.findOne({ id: dto.id });
+ 
+    const exist = await this.findOne({
+      where: { id: dto.id },
+      relations: ['inspection'],
+    });
 
     if (exist) {
       for (let index = 0; index < dto.copyCount; index++) {
         /* save a new item in the checklist run */
         const checklistRunItemToCopy = Object.assign({}, exist);
         delete checklistRunItemToCopy.id;
+        
         const newChecklistRun = await this.save(checklistRunItemToCopy);
 
         /* copy and save inspection checklist (comments, verification) */
-        let checklistItems = await this.getChecklistItemsByRunId(exist.id, dto.contractProductId);
-        checklistItems.forEach(i => {
-          delete i.id;
-          return Object.assign(i, { inspection_checklist_run: { id: newChecklistRun.id } })
-        });
-        const repo = getCustomRepository(InspectionChecklistCommentRepository);
-        await repo.save(checklistItems);
+        // let checklistItems = await this.getChecklistItemsByRunId(exist.id, dto.contractProductId);
+        // checklistItems.forEach(i => {
+        //   delete i.id;
+        //   return Object.assign(i, { inspection_checklist_run: { id: newChecklistRun.id } })
+        // });
+        // const repo = getCustomRepository(InspectionChecklistCommentRepository);
+        // await repo.save(checklistItems);
 
         /* copy and save filtered product */
         let ins_checklist_prod_items = await this.getChecklistProductItemsById(
@@ -101,7 +106,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
     const query = await this.createQueryBuilder('inspection_checklist_run')
     const results: any[] = await query
       .select('id')
-      .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+      .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
       .getRawMany()
 
     const lastRecord = results[results.length - 1];
@@ -146,7 +151,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
     const query = await repo.createQueryBuilder('inspection_checklist_run')
     const results: any[] = await query
       .select('id')
-      .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+      .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
       .getRawMany()
 
     const record = results.filter(r => r.id === dto.id).shift();
@@ -176,7 +181,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
 
       const results: any[] = await query
         .select('id')
-        .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+        .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
         .getRawMany()
 
       record = results.filter(r => r.id === dto.id).shift();
@@ -207,14 +212,19 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
 
       const results: any[] = await query
         .select('id')
-        .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+        .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
         .getRawMany();
 
       record = results.filter(r => r.id === dto.id).shift();
 
       /* check if record is the last record then create a copy and save new record */
       if (record && Number(record.row_number) === Number(totalCount)) {
-        const exist = await this.findOne({ id: record.id }, { relations: ["inspection"] });
+
+        const exist = await this.findOne({
+          where: { id: record.id },
+          relations: ['inspection'],
+        });
+
         let rec: any;
 
         if (exist) {
@@ -241,7 +251,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
 
         }
         ret = await this.getInspectionsRunById(rec.id);
-
+    
       } else {
         /* get the next record */
         nextRow = Number(record.row_number) + 1;
@@ -275,7 +285,7 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
 
       const rows: any = await this.createQueryBuilder('inspection_checklist_run')
         .select('id')
-        .addSelect('row_number() OVER (ORDER BY "created_at" ASC)')
+        .addSelect('row_number() OVER (ORDER BY "created_at" DESC)')
         .where('saved_checklist_id = :saved_checklist_id', { saved_checklist_id: checklist_id })
         .getRawMany();
 
@@ -309,15 +319,15 @@ export class InspectionChecklistRunRepository extends Repository<InspectionCheck
     const ret = await Promise.all(results.map(async (r) => {
       const product = await this.getProductById(r.contract_product.child_id);
       const category = await this.getCategoryById(r.contract_category.category_id);
-      const checklist_item = await this.getInsCheckItemContractTermById(r.contract_term.id, r.contract_category.id, ins_checklist_run_id, r.contract_product.id)
-
+      const checklist_item = await this.getInsCheckItemContractTermById(r?.contract_term?.id, r?.contract_category?.id, ins_checklist_run_id, r?.contract_product?.id)
+  
       delete r.contract_category.category_id;
   
       return Object.assign({}, r, {
         contract_product: { ...r.contract_product, product },
         contract_category: { ...r.contract_category, category },
         checklist_item,
-        saved_checklist: { id: r.saved_checklist.id },
+        saved_checklist: { id: r?.saved_checklist?.id },
       });
     }));
 

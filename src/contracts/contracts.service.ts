@@ -3,7 +3,7 @@ import { Contract } from './contracts.entity';
 import { ContractsRepository } from './contracts.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { ReqCDto, GCDto, ResCDto } from './contracts.dto';
 
 @Injectable()

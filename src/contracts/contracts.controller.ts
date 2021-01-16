@@ -1,8 +1,9 @@
 import { join } from 'path';
 import { Contract } from './contracts.entity';
 import { ContractsService } from './contracts.service';
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res, UseGuards } from '@nestjs/common';
 import { ReqCDto, GCDto, ResCDto } from './contracts.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('contracts')
 export class ContractsController {
@@ -14,6 +15,7 @@ export class ContractsController {
   }
 
   @Post()
+  //////@UseGuards(AuthGuard('jwt'))
   create(@Body() createDto: ReqCDto): Promise<Contract> {
     return this.srv.createContract(createDto);
   }
@@ -24,16 +26,19 @@ export class ContractsController {
   }
 
   @Patch()
+  //////@UseGuards(AuthGuard('jwt'))
   update(@Body() updateDto: Contract): Promise<Contract> {
     return this.srv.updateContract(updateDto);
   }
 
   @Delete('/:id')
+  //////@UseGuards(AuthGuard('jwt'))
   delete(@Param('id') id: string): Promise<Contract> {
     return this.srv.deleteById(id);
   }
   
   @Get('image/:filename')
+  //////@UseGuards(AuthGuard('jwt'))
   get(@Param('filename') filename, @Res() res) {
     return res.sendFile(filename, { root: join(__dirname, '../../uploads/images/') });
   }

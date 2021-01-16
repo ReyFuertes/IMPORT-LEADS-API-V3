@@ -1,32 +1,48 @@
 import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import * as _ from 'lodash';
 import { Inspection } from './inspection.entity';
-import { sqlOp } from 'src/models/generic.model';
-import { SavedChecklistRepository } from 'src/saved-checklist/saved-checklist.repository';
+import { sqlOp } from '../models/generic.model';
+import { SavedChecklistRepository } from '../saved-checklist/saved-checklist.repository';
 import { GetInspectionDto } from './inspection.dto';
-import { UserProfileRepository } from 'src/user-profile/user-profile.repository';
-import { IUserProfileDto } from 'src/user-profile/user-profile.dto';
-import { VenuesRepository } from 'src/venues/venues.repository';
-import { IVenueDto } from 'src/venues/venues.dto';
-import { SavedChecklistItemsRepository } from 'src/saved-checklist-items/saved-checklist-items.repository';
-import { ProductsRepository } from 'src/products/products.repository';
-import { IProductDto } from 'src/products/products.dto';
+import { UserProfileRepository } from '../user-profile/user-profile.repository';
+import { IUserProfileDto } from '../user-profile/user-profile.dto';
+import { VenuesRepository } from '../venues/venues.repository';
+import { IVenueDto } from '../venues/venues.dto';
+import { SavedChecklistItemsRepository } from '../saved-checklist-items/saved-checklist-items.repository';
+import { ProductsRepository } from '../products/products.repository';
+import { IProductDto } from '../products/products.dto';
 
 @EntityRepository(Inspection)
 export class InspectionRepository extends Repository<Inspection> {
 
   async finishInspection(dto: any): Promise<void> {
     const matches = await this.find({ saved_checklist: { id: dto.id } });
-    
+   
     if (matches && matches.length > 0) {
       const inspections = matches.map(m => {
         return {
           ...m,
-          is_finished: true 
+          is_finished: true
         }
       });
+
       await this.save(inspections);
     }
+
+    /* if saved checklist not in inspection, we need to add it and set to finished */
+    const saved_checklist_repo = getCustomRepository(SavedChecklistRepository);
+    const query = saved_checklist_repo.createQueryBuilder('saved_checklist');
+
+    const saved_checklist_result = await query
+      .where("id = :id", { id: dto.id })
+      .getOne()
+
+    await this.save({
+      is_finished: true,
+      saved_checklist: { id: saved_checklist_result.id }
+    });
+
+
   }
 
   async deleteById(id: string): Promise<void> {
@@ -38,7 +54,6 @@ export class InspectionRepository extends Repository<Inspection> {
   }
 
   async getFinishedInspection(dto: GetInspectionDto): Promise<any> {
-    console.log(1)
     return this.getInspections(true);
   }
 
@@ -65,8 +80,8 @@ export class InspectionRepository extends Repository<Inspection> {
       const up = await this.getProfileByUserId(result.user.id) || null;
       const venue = await this.getVenueById(result.checklist_contract.venue_id) || null;
 
-      let checklist_items = await Promise.all(result.checklist_items.map(async (ci) => {
-        return await this.getCheckListItemsById(ci.id) || null;
+      let checklist_items = await Promise.all(result?.checklist_items?.map(async (ci) => {
+        return await this.getCheckListItemsById(ci?.id);
       }));
 
       /* eliminate the duplicate contract product items */
@@ -75,7 +90,10 @@ export class InspectionRepository extends Repository<Inspection> {
       /* extract the products from contract product */
       let products = checklist_items
         .filter(ci => checklistContractIds.filter(i => ci.contract_product === i))
-        .map(p => ({ id: p.contract_product.product.id, product_name: p.contract_product.product.product_name }))
+        .map(p => ({
+          id: p?.contract_product?.product?.id,
+          product_name: p?.contract_product?.product?.product_name
+        })) || [];
 
       /* remove products duplicates */
       products = _.uniqBy(products, 'id');
@@ -85,16 +103,16 @@ export class InspectionRepository extends Repository<Inspection> {
 
       return Object.assign({}, result, {
         user: Object.assign({}, result.user, {
-          image: up.image
+          image: up?.image
         }),
         checklist_items: [],
         products,
         venue,
         inspectionCount,
-        is_finished: result.inspection.map(i => i.is_finished).shift()
+        is_finished: result?.inspection?.map(i => i?.is_finished).shift() || false
       });
     }));
-
+    
     return ret.filter(r => r.is_finished === isActive);
   }
 
@@ -118,7 +136,7 @@ export class InspectionRepository extends Repository<Inspection> {
       .getMany());
 
     const ret = await Promise.all(results.map(async (r) => {
-      const product = await this.getProductById(r.contract_product.child_id);
+      const product = await this.getProductById(r?.contract_product?.child_id);
 
       return Object.assign({}, r, {
         contract_product: { ...r.contract_product, product }

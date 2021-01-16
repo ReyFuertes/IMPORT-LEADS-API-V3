@@ -1,9 +1,9 @@
 import { Contract } from '../contracts/contracts.entity';
 import { BaseEntity, PrimaryGeneratedColumn, Generated, Column, Entity, Unique, ManyToOne, JoinColumn } from "typeorm";
-import { User } from 'src/user/user.entity';
-import { Access } from 'src/access/access.entity';
+import { User } from '../user/user.entity';
+import { Access } from '../access/access.entity';
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class UserAccess extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

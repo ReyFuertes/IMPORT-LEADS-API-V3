@@ -3,7 +3,7 @@ import { TagRepository } from './tags.repository';
 import { Tag } from './tags.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 
 @Injectable()
 export class TagsService extends BaseService<Tag> {

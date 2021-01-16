@@ -1,16 +1,16 @@
 import { Repository, EntityRepository, getCustomRepository } from 'typeorm';
 import * as _ from 'lodash';
-import { sqlOp } from 'src/models/generic.model';
+import { sqlOp } from '../models/generic.model';
 import { IUserDto } from './user.dto';
 import { User } from './user.entity';
-import { IAccessDto } from 'src/access/access.dto';
-import { IUserAccessDto } from 'src/user-access/user-access.dto';
-import { UserAccessRepository } from 'src/user-access/user-access.repository';
-import { UserRoleRepository } from 'src/user-role/user-role.repository';
-import { IRoleDto } from 'src/role/role.dto';
-import { IUserRoleDto } from 'src/user-role/user-role.dto';
-import { AuthRepository } from 'src/auth/auth-repository';
-import { UserProfileRepository } from 'src/user-profile/user-profile.repository';
+import { IAccessDto } from '../access/access.dto';
+import { IUserAccessDto } from '../user-access/user-access.dto';
+import { UserAccessRepository } from '../user-access/user-access.repository';
+import { UserRoleRepository } from '../user-role/user-role.repository';
+import { IRoleDto } from '../role/role.dto';
+import { IUserRoleDto } from '../user-role/user-role.dto';
+import { AuthRepository } from '../auth/auth-repository';
+import { UserProfileRepository } from '../user-profile/user-profile.repository';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException, BadRequestException } from '@nestjs/common';
 

@@ -1,7 +1,7 @@
 import { GCDto } from './../contracts/contracts.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base.service';
+import { BaseService } from '../base.service';
 import { GetAccesDto, IAccessDto } from './access.dto';
 import { AccessRepository } from './access.repository';
 import { Access } from './access.entity';

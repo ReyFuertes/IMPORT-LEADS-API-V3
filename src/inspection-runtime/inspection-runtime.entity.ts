@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Generated, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinColumn } from "typeorm";
 import { Inspection } from "src/inspection/inspection.entity";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class InspectionRuntime extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

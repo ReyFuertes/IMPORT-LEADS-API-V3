@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, Patch, Query, Res, UseGuards } from '@nestjs/common';
 import { UserAccessService } from './user-access.service';
 import { GetUserAccesDto, IUserAccessDto } from './user-access.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user-access')
 export class UserAccessController {
@@ -12,6 +13,7 @@ export class UserAccessController {
   }
 
   @Post()
+  //@UseGuards(AuthGuard('jwt'))
   create(@Body() dto: IUserAccessDto): Promise<IUserAccessDto[]> {
     return this.srv.saveUserAccess(dto);
   }
