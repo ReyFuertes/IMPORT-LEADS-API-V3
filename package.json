@@ -43,7 +43,7 @@
     "eslint-plugin-import": "^2.20.1",
     "jest": "^25.1.0",
     "lodash": "^4.17.15",
-    "moment": "^2.29.0",
+    "moment": "^2.29.2",
     "mssql": "^6.3.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
